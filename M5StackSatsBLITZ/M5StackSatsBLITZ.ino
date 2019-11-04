@@ -9,36 +9,37 @@
 #define KEYBOARD_INT          5
 
 //Wifi details
-char wifiSSID[] = "YOUR-WIFI";
-char wifiPASS[] = "YOUR-WIFI-PASSWORD";
+char wifiSSID[] = "WIFI_NAME";   //Case Sensitive, also no special characters
+char wifiPASS[] = "WIFI_PASS";   
 
 //BLITZ DETAILS
-const char*  server = "room77.raspiblitz.com"; 
+const char*  server = "Server Name Or IP"; 
 const int httpsPort = 443;
 const int lndport = 8080;
 String pubkey;
 String totcapacity;
 
-String readmacaroon = "YOUR-LND-READ-MACAROON";
-String invoicemacaroon = "YOUR-LND-INVOICE-MACAROON";
+String readmacaroon = "LND READ MACAROON";
+String invoicemacaroon = "LND INVOICE MACAROON";
 const char* test_root_ca =   //SSL must be in this format, SSL for the node can be exported from yournode.com:8080 in firefox
-     "-----BEGIN CERTIFICATE-----\n" \
-    "MIICBTCCAaqgAwIBAgIQBSMZ9g3niBo1jyzK1DvECDAKBggqhkjOPQQDAjAyMR8w\n" \
-    "HQYDVQQKExZsbmQgYXV0b2dlbmVyYXRlZCBjZXJ0MQ8wDQYDVQQDEwZSb29tNzcw\n" \
-    "HhcNMTPBgNVHRMBAf8EBTADAQH/MHsGA1UdEQR0MHKCBMR8wHQYDVQQKExZsbmQg\n" \
-    "YXV0b2dlbmVyYXRlZCBjZXJ0MQ8wDQYDVQQDEwZSb29tNzcwWTATBgcqhkjOPQIB\n" \
-    "BggqhkjOPAAAAAAAAAAAAGHBMCoskqHEP6AAAAAAAAA+OWZzLshQoTUeV6FVKbFC\n" \
-    "CC+fVGRQsXJx+GVUknnNEcJTt/fQ9CmM6stqGPjAo4GhMIGeMA4GA1UdDwEB/wQE\n" \
-    "AwICpDAPBgNVHRMBAf8EBTADAQH/MHsGA1UdEQR0MHKCBlJvb203N4IJbG9jYWxo\n" \
-    "b3N0ghVyb29tNzcucmFzcGlibGl0ei5jb22CBHVuaXiCCnVuaXhwYWNrZXSHBH8A\n" \
-    "AAGHEAAAAAAAAAAAAAAAAAAAAAGHBMCoskqHEP6AAAAAAAAA+OWZZHfUV0qHBAAA\n" \
-    "AAAwCgYIKoZIzj0EAwIDSQAwRgIhALKz3oScii3i+5ltMVQc9u2O38rgfnGCj5Lh\n" \
-    "u9iwcAiZAiEA0BjRcisPUlG+SE/s+x6/A2NuT0gtIZ3PKd/GuM5T0jM=\n" \
-    "-----END CERTIFICATE-----\n";
+    "-----BEGIN CERTIFICATE-----\n" \
+    "MIICITCCAcegAwIBAgIRAPt2SSkLWPX61GtcPjHPvh4wCgYIKoZIzj0EAwIwNjEf\n" \
+    "MB0GA1UEChMWbG5kIGF1dG9nZW5lcmF0ZWQgY2VydDETMBEGA1UEAxMKUmFzcGlC\n" \
+    "bGl0ejAeFw0xOTA1MjYxMjEwMjdaFw0yMDA3MjAxMjEwMjdaMDYxHzAdBgNVBAoT\n" \
+    "FmxuZCBhdXRvZ2VuZXJhdGVkIGNlcnQxEzARBgNVBAMTClJhc3BpQmxpdHowWTAT\n" \
+    "BgcqhkjOPQIBBggqhkjOPQMBBwNCAAQbl+SzxDpLnbGbrKEjzaZOkHh7qWwLzvTB\n" \
+    "5x4SBKB5IEyKrP42F/yB8UURiLtnVn61K4B+quE4uk83QtpyiEuuo4G1MIGyMA4G\n" \
+    "A1UdDwEB/wQEAwICpDAPBgNVHRMBAf8EBTADAQH/MIGOBgNVHREEgYYwgYOCClJh\n" \
+    "c3BpQmxpdHqCCWxvY2FsaG9zdIIEdW5peIIKdW5peHBhY2tldIcEfwAAAYcQAAAA\n" \
+    "AAAAAAAAAAAAAAAAAYcECgAA14cQJgEBioMB5ucAAAAAAADRiYcQJgEBioMB5ueZ\n" \
+    "p2i3PfXHa4cQ/oAAAAAAAADJyTrZT3diWYcEAAAAADAKBggqhkjOPQQDAgNIADBF\n" \
+    "AiB0yC6e2quMe6fIfMbDxdrWVqDy0ZWcLN3t9e4Jan8orwIhAK+hJVHctKGL7uB0\n" \
+    "2Xa83Qs+KTZeA0uLUOssso/Uf737\n" \ 
+     "-----END CERTIFICATE-----\n";
 
 String choice = "";
 
-String on_currency = "BTCEUR"; //currency can be changed here ie BTCUSD BTCGBP etc
+String on_currency = "BTCUSD"; //currency can be changed here ie BTCUSD BTCGBP etc
 String on_sub_currency = on_currency.substring(3);
 String memo = "Memo "; //memo suffix, followed by the price then a random number
 
@@ -68,7 +69,7 @@ void page_input()
   M5.Lcd.setCursor(0, 40);
   M5.Lcd.println("Amount then C");
   M5.Lcd.println("");
-  M5.Lcd.println("EUR: ");
+  M5.Lcd.println("USD: ");
   M5.Lcd.println("");
   M5.Lcd.println("SATS: ");
   M5.Lcd.println("");
@@ -134,6 +135,8 @@ void setup() {
 
     
   pinMode(KEYBOARD_INT, INPUT_PULLUP);
+  pinMode(26, OUTPUT);
+
   
   on_rates();
   nodecheck();
@@ -182,6 +185,12 @@ void loop() {
         tempi = 1;
 
      M5.Lcd.fillScreen(BLACK);
+     M5.Lcd.println("Place hand above sensor");
+     digitalWrite(26, HIGH);
+     delay(2000);
+     digitalWrite(26, LOW);
+     delay(1000);
+     counta = 1000;
      M5.Lcd.setCursor(60, 80);
      M5.Lcd.setTextSize(4);
      M5.Lcd.setTextColor(TFT_GREEN);
@@ -306,7 +315,7 @@ void nodecheck(){
   bool checker = false;
   while(!checker){
   WiFiClientSecure client;
-   client.setCACert(test_root_ca);
+   //client.setCACert(test_root_ca);
   if (!client.connect(server, lndport)){
 
     M5.Lcd.fillScreen(BLACK);
@@ -327,7 +336,7 @@ void reqinvoice(String value){
 
    WiFiClientSecure client;
 
-  client.setCACert(test_root_ca);
+  //client.setCACert(test_root_ca);
 
   Serial.println("\nStarting connection to server...");
   if (!client.connect(server, lndport)){
@@ -335,7 +344,7 @@ void reqinvoice(String value){
   }
 
     
-   String topost = "{\"value\": \""+ value +"\", \"memo\": \""+ memo + String(fiat) + on_sub_currency + " (" + String(random(1,1000)) + ")" +"\", \"expiry\": \"1000\"}";
+   String topost = "{\"value\": \""+ value +"\", \"memo\": \""+ memo + String(random(1,1000)) +"\", \"expiry\": \"1000\","+ +"\"private\": true}";
   
        client.print(String("POST ")+ "https://" + server + ":" + String(lndport) + "/v1/invoices HTTP/1.1\r\n" +
                  "Host: "  + server +":"+ String(lndport) +"\r\n" +
@@ -378,7 +387,7 @@ void gethash(String xxx){
   
    WiFiClientSecure client;
 
-  client.setCACert(test_root_ca);
+  //client.setCACert(test_root_ca);
 
   Serial.println("\nStarting connection to server...");
   if (!client.connect(server, lndport)){
@@ -421,7 +430,7 @@ void checkpayment(String xxx){
   
    WiFiClientSecure client;
 
-  client.setCACert(test_root_ca);
+  //client.setCACert(test_root_ca);
 
   Serial.println("\nStarting connection to server...");
   if (!client.connect(server, lndport)){
@@ -465,7 +474,7 @@ void page_qrdisplay(String xxx)
 {  
 
   M5.Lcd.fillScreen(BLACK); 
-  M5.Lcd.qrcode(payreq,45,0,240,10);
+  M5.Lcd.qrcode(payreq,45,0,240,14);
   delay(100);
 
 }
